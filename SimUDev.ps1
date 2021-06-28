@@ -16,6 +16,8 @@ class Asset {
 class Device : Asset {
     hidden [DeviceType]$devtype = [DeviceType]::Undefined
     [string]$Status
+    [string]$Hostname
+    [string]$ProcessorIdentifier
 
     [DeviceType] GetDeviceType(){
         return $this.devtype
@@ -23,9 +25,11 @@ class Device : Asset {
 }
 
 class ComputeServer : Device {
-    hidden [DeviceType]$devtype = [DeviceType]::Compute
-    [string]$ProcessorIdentifier
-    [string]$Hostname
+    hidden [DeviceType]$devtype = [DeviceType]::Compute   
+}
+
+class Storage : Device {
+    hidden [DeviceType]$devtype = [DeviceType]::Storage
 }
 
 class Rack : Device {
@@ -60,16 +64,3 @@ $FirstRack = [Rack]::new(16)
 $FirstRack.Status = "Operational"
 $FirstRack.Datacenter = "PNW"
 $FirstRack.Location = "F03R02.J10"
-
-(0..15).ForEach({
-    $ComputeServer = [ComputeServer]::new()
-    $ComputeServer.Brand = "Fabrikam, Inc."       ## Inherited from Asset
-    $ComputeServer.Model = "Fbk5040"              ## Inherited from Asset
-    $ComputeServer.Status = "Installed"           ## Inherited from Device
-    $ComputeServer.ProcessorIdentifier = "x64"    ## ComputeServer
-    $ComputeServer.Hostname = ("r1s" + $_.ToString("000")) ## ComputeServer
-    $FirstRack.AddDevice($ComputeServer, $_)
-  })
-
-$FirstRack
-$FirstRack.Devices
