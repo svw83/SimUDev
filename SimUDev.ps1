@@ -9,31 +9,73 @@ enum DeviceType {
 }
 
 class Asset {
-    [string]$Brand
-    [string]$Model
+    [string]$assetBrand
+    [string]$assetModel
 }
 
 class Device : Asset {
-    hidden [DeviceType]$devtype = [DeviceType]::Undefined
-    [string]$Status
-    [string]$Hostname
-    [string]$ProcessorIdentifier
+    hidden [DeviceType]$deviceType = [DeviceType]::Undefined
 
-    [DeviceType] GetDeviceType(){
-        return $this.devtype
+    [string]$deviceStatus
+    [string]$deviceHostname
+    [string]$deviceSerialNumber
+    
+    [DeviceType]getDeviceType(){
+        return $this.deviceType
+    }
+
+    [string]getDeviceBrand(){
+        return $this.assetBrand
+    }
+
+    [void]setDeviceBrand([string]$ab){
+        $this.assetBrand = $ab
     }
 }
 
 class ComputeServer : Device {
-    hidden [DeviceType]$devtype = [DeviceType]::Compute   
+    hidden [DeviceType]$deviceType = [DeviceType]::Compute   
+}
+
+class Disk : Device {
+    [string]$diskStatus
+    [int]$diskIndex
+    [Double]$diskCapacityGB
+    [string]$diskName
+    [int]$diskRPM
 }
 
 class Storage : Device {
-    hidden [DeviceType]$devtype = [DeviceType]::Storage
+    hidden [DeviceType]$deviceType = [DeviceType]::Storage
+    [Disk]$storageDisk
+
+    Storage(){
+        
+    }
+
+    [void]setDisk([Disk]$d){
+        $this.storageDisk = $d
+    }
+
+    [string]getDiskName(){
+        return $this.storageDisk.diskName
+    }
+
+    [string]getDiskStatus(){
+        return $this.storageDisk.diskStatus
+    }
+
+    [int]getDiskIndex(){
+        return $this.storageDisk.diskIndex
+    }
+
+    [double]getDiskCapacityGB(){
+        return $this.storageDisk.diskCapacityGB
+    }
 }
 
 class Rack : Device {
-    hidden [DeviceType]$devtype = [DeviceType]::Rack
+    hidden [DeviceType]$deviceType = [DeviceType]::Rack
     hidden [int]$Slots = 8
 
     [string]$Datacenter
@@ -60,4 +102,22 @@ class Rack : Device {
     }
 }
 
-[Storage]::new()
+Clear-Host
+
+$s = [Storage]::new()
+
+$s.setDisk([Disk]::new())
+
+$s.setDeviceBrand("Dell")
+$s.storageDisk.diskIndex = 1
+$s.storageDisk.diskStatus = "Online"
+$s.storageDisk.diskName = "Disk1"
+$s.storageDisk.diskCapacityGB = 500.00
+
+
+$s.getDeviceType()
+$s.getDiskIndex()
+$s.getDiskStatus()
+$s.getDiskName()
+$s.getDiskCapacityGB()
+$s.getDeviceBrand()
