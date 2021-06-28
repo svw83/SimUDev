@@ -59,3 +59,5 @@ class Rack : Device {
         $this.Devices[$slot] = $null
     }
 }
+
+[Storage]::new()
