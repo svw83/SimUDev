@@ -59,8 +59,3 @@ class Rack : Device {
         $this.Devices[$slot] = $null
     }
 }
-
-$FirstRack = [Rack]::new(16)
-$FirstRack.Status = "Operational"
-$FirstRack.Datacenter = "PNW"
-$FirstRack.Location = "F03R02.J10"
