@@ -63,7 +63,7 @@ class Storage {
     [String]$storageBrand
     [String]$storageModel
     [Disk]$storageDisk
-    [PowerSupplyUnit[]]$storagePsu
+    [PowerSupplyUnit[]]$storagePsus
 
     [string]getStorageBrand(){
         return $this.storageBrand
@@ -85,8 +85,8 @@ class Storage {
         $this.storageDisk = $sd
     }
 
-    [void]setStoragePsu([PowerSupplyUnit]$psuObject, [int]$psuIndex){
-        $this.storagePsu[$psuIndex] = $psuObject
+    [void]setstoragePsus([PowerSupplyUnit]$psuObject, [int]$psuIndex){
+        $this.storagePsus[$psuIndex] = $psuObject
     }
 }
 
@@ -94,7 +94,7 @@ class Equallogic : Storage {
     Equallogic(){
         $this.storageBrand = "Dell"
         $this.storageModel = "Equallogic"
-        $this.storagePsu = [PowerSupplyUnit[]]::new(2)
+        $this.storagePsus = [PowerSupplyUnit[]]::new(2)
     }
 }
 
@@ -116,9 +116,9 @@ $e.storageDisk.setStorageComponentType("Disk")
     $p.storageComponentName = ("PS" + $_.ToString("0"))
     $p.storageComponentStatus = "Online"
 
-    $e.setStoragePsu($p,$_)
+    $e.setstoragePsus($p,$_)
 })
 
 $e
 $e.storageDisk
-$e.storagePsu
+$e.storagePsus
