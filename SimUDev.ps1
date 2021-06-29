@@ -109,27 +109,15 @@ $e.storageDisk.setStorageComponentName("Disk1")
 $e.storageDisk.setStorageComponentStatus("Online")
 $e.storageDisk.setStorageComponentType("Disk")
 
-$p1 = [PowerSupplyUnit]::new()
+(0..1).ForEach({
+    $p = [PowerSupplyUnit]::new()
 
-$p1.storageComponentIndex = 1
-$p1.storageComponentName = "PS1"
-$p1.storageComponentStatus = "Online"
+    $p.storageComponentIndex = $_
+    $p.storageComponentName = ("PS" + $_.ToString("0"))
+    $p.storageComponentStatus = "Online"
 
-$e.setStoragePsu($p1,0)
-
-$p2 = [PowerSupplyUnit]::new()
-
-$p2.storageComponentIndex = 2
-$p2.storageComponentName = "PS1"
-$p2.storageComponentStatus = "Online"
-
-$e.setStoragePsu($p2,1)
-
-#$e.getStorageBrand()
-#$e.getStorageModel()
-#$e.storageDisk.getStorageComponentName()
-#$e.storageDisk.getStorageComponentStatus()
-#$e.storageDisk.getStorageComponentType()
+    $e.setStoragePsu($p,$_)
+})
 
 $e
 $e.storageDisk
