@@ -1,61 +1,61 @@
-class StorageComponents {
-    [int]$storageComponentsIndex
-    [double]$storageComponentsCapacityGB
+class StorageComponent {
+    [int]$storageComponentIndex
+    [double]$storageComponentCapacityGB
     
-    [string]$storageComponentsType
-    [string]$storageComponentsName
-    [string]$storageComponentsStatus
+    [string]$storageComponentType
+    [string]$storageComponentName
+    [string]$storageComponentStatus
 
-    [string]getStorageComponentsIndex(){
-        return $this.storageComponentsIndex
+    [string]getStorageComponentIndex(){
+        return $this.storageComponentIndex
     }
 
-    [string]getStorageComponentsCapacityGB(){
-        return $this.storageComponentsCapacityGB
+    [string]getStorageComponentCapacityGB(){
+        return $this.storageComponentCapacityGB
     }
 
-    [string]getStorageComponentsType(){
-        return $this.storageComponentsType
+    [string]getStorageComponentType(){
+        return $this.storageComponentType
     }
 
-    [string]getStorageComponentsName(){
-        return $this.storageComponentsName
+    [string]getStorageComponentName(){
+        return $this.storageComponentName
     }
 
-    [string]getStorageComponentsStatus(){
-        return $this.storageComponentsStatus
+    [string]getStorageComponentStatus(){
+        return $this.storageComponentStatus
     }
 
-    [void]setstorageComponentsIndex([int]$sci){
-        $this.storageComponentsIndex = $sci
+    [void]setstorageComponentIndex([int]$sci){
+        $this.storageComponentIndex = $sci
     } 
 
-    [void]setstorageComponentsCapacityGB([double]$scc){
-        $this.storageComponentsCapacityGB = $scc
+    [void]setstorageComponentCapacityGB([double]$scc){
+        $this.storageComponentCapacityGB = $scc
     }
 
-    [void]setStorageComponentsType([string]$sct){
-        $this.storageComponentsType = $sct
+    [void]setStorageComponentType([string]$sct){
+        $this.storageComponentType = $sct
     }
 
-    [void]setStorageComponentsName([string]$scn){
-        $this.storageComponentsName = $scn
+    [void]setStorageComponentName([string]$scn){
+        $this.storageComponentName = $scn
     }
 
-    [void]setStorageComponentsStatus([string]$scs){
-        $this.storageComponentsStatus = $scs
+    [void]setStorageComponentStatus([string]$scs){
+        $this.storageComponentStatus = $scs
     }
 }
 
-class Disk : StorageComponents {
+class Disk : StorageComponent {
     Disk(){
-        $this.storageComponentsType = "Disk"
+        $this.storageComponentType = "Disk"
     }
 }
 
-class PowerSupplyUnit : StorageComponents {
+class PowerSupplyUnit : StorageComponent {
     PowerSupplyUnit(){
-        $this.storageComponentsType = "PSU"
+        $this.storageComponentType = "PSU"
     }
 }
 
@@ -97,17 +97,17 @@ Clear-Host
 $e = [Equallogic]::new()
 
 $e.setStorageDisk([Disk]::new())
-$e.storageDisk.setStorageComponentsIndex(1)
-$e.storageDisk.setStorageComponentsCapacityGB(500.10)
-$e.storageDisk.setStorageComponentsName("Disk1")
-$e.storageDisk.setStorageComponentsStatus("Online")
-$e.storageDisk.setStorageComponentsType("Disk")
+$e.storageDisk.setStorageComponentIndex(1)
+$e.storageDisk.setStorageComponentCapacityGB(500.10)
+$e.storageDisk.setStorageComponentName("Disk1")
+$e.storageDisk.setStorageComponentStatus("Online")
+$e.storageDisk.setStorageComponentType("Disk")
 
 #$e.getStorageBrand()
 #$e.getStorageModel()
-#$e.storageDisk.getStorageComponentsName()
-#$e.storageDisk.getStorageComponentsStatus()
-#$e.storageDisk.getStorageComponentsType()
+#$e.storageDisk.getStorageComponentName()
+#$e.storageDisk.getStorageComponentStatus()
+#$e.storageDisk.getStorageComponentType()
 
 $e
 $e.storageDisk
