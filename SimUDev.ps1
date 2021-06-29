@@ -63,6 +63,7 @@ class Storage {
     [String]$storageBrand
     [String]$storageModel
     [Disk]$storageDisk
+    [PowerSupplyUnit[]]$storagePsu
 
     [string]getStorageBrand(){
         return $this.storageBrand
@@ -83,12 +84,17 @@ class Storage {
     [void]setStorageDisk([Disk]$sd){
         $this.storageDisk = $sd
     }
+
+    [void]setStoragePsu([PowerSupplyUnit]$psuObject, [int]$psuIndex){
+        $this.storagePsu[$psuIndex] = $psuObject
+    }
 }
 
 class Equallogic : Storage {
     Equallogic(){
         $this.storageBrand = "Dell"
         $this.storageModel = "Equallogic"
+        $this.storagePsu = [PowerSupplyUnit[]]::new(2)
     }
 }
 
@@ -103,6 +109,22 @@ $e.storageDisk.setStorageComponentName("Disk1")
 $e.storageDisk.setStorageComponentStatus("Online")
 $e.storageDisk.setStorageComponentType("Disk")
 
+$p1 = [PowerSupplyUnit]::new()
+
+$p1.storageComponentIndex = 1
+$p1.storageComponentName = "PS1"
+$p1.storageComponentStatus = "Online"
+
+$e.setStoragePsu($p1,0)
+
+$p2 = [PowerSupplyUnit]::new()
+
+$p2.storageComponentIndex = 2
+$p2.storageComponentName = "PS1"
+$p2.storageComponentStatus = "Online"
+
+$e.setStoragePsu($p2,1)
+
 #$e.getStorageBrand()
 #$e.getStorageModel()
 #$e.storageDisk.getStorageComponentName()
@@ -111,3 +133,4 @@ $e.storageDisk.setStorageComponentType("Disk")
 
 $e
 $e.storageDisk
+$e.storagePsu
