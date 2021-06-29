@@ -1,8 +1,6 @@
 class StorageComponent {
-    [int]$storageComponentIndex
-    [double]$storageComponentCapacityGB
-    
     [string]$storageComponentType
+    [int]$storageComponentIndex
     [string]$storageComponentName
     [string]$storageComponentStatus
 
@@ -48,6 +46,7 @@ class StorageComponent {
 }
 
 class Disk : StorageComponent {
+    [double]$storageComponentCapacityGB
     Disk(){
         $this.storageComponentType = "Disk"
     }
@@ -59,11 +58,19 @@ class PowerSupplyUnit : StorageComponent {
     }
 }
 
+class Controller : StorageComponent {
+    Controller(){
+        $this.storageComponentType = "Controller"
+    }
+}
+
 class Storage {
     [String]$storageBrand
     [String]$storageModel
     [Disk]$storageDisk
     [PowerSupplyUnit[]]$storagePsus
+    [Controller[]]$storageControllers
+    [int]$storageDiskTotal
 
     [string]getStorageBrand(){
         return $this.storageBrand
@@ -71,6 +78,10 @@ class Storage {
 
     [string]getStorageModel(){
         return $this.storageModel
+    }
+
+    [string]getStorageDiskTotal(){
+        return $this.storageDiskTotal
     }
 
     [void]setStorageBrand([string]$sb){
@@ -85,8 +96,16 @@ class Storage {
         $this.storageDisk = $sd
     }
 
-    [void]setstoragePsus([PowerSupplyUnit]$psuObject, [int]$psuIndex){
+    [void]setStoragePsus([PowerSupplyUnit]$psuObject, [int]$psuIndex){
         $this.storagePsus[$psuIndex] = $psuObject
+    }
+
+    [void]setStorageControllers([Controller]$controllerObject, [int]$controllerIndex){
+        $this.storageControllers[$controllerIndex] = $controllerObject
+    }
+
+    [void]setStorageDiskTotal([int]$sdt){
+        $this.storageDiskTotal = $sdt
     }
 }
 
@@ -95,6 +114,7 @@ class Equallogic : Storage {
         $this.storageBrand = "Dell"
         $this.storageModel = "Equallogic"
         $this.storagePsus = [PowerSupplyUnit[]]::new(2)
+        $this.storageControllers = [Controller[]]::new(2)
     }
 }
 
@@ -119,6 +139,20 @@ $e.storageDisk.setStorageComponentType("Disk")
     $e.setstoragePsus($p,$_)
 })
 
+(0..1).ForEach({
+    $c = [Controller]::new()
+
+    $c.storageComponentIndex = $_
+    $c.storageComponentName = ("Controller" + $_.ToString("0"))
+    $c.storageComponentStatus = "Online"
+
+    $e.setStorageControllers($c,$_)
+})
+
 $e
 $e.storageDisk
 $e.storagePsus
+$e.storageControllers
+
+$e.setStorageDiskTotal(2)
+$e.getStorageDiskTotal()
